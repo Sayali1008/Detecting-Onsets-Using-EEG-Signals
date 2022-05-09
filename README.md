@@ -12,4 +12,18 @@ We use the NMED-T dataset, a collection of EEG signals of 20 users as they liste
 The songs are collected in a wav format. There are no ground truths for out tasks so we generate the true labels based on the baseline paper using python's madmom library's RNN Onset detection function. These are converted into one-hot labels for training and timestamps for evaluation
 
 ## Baseline MLP and RNN
-A standard MLP with our custom Dataloader which trains on 19 users and validates on 1 user's signals. Simply running the cells should give you the result
+A standard MLP with our custom Dataloader which trains on 19 users and validates on 1 user's signals. Simply running the cells should give you the result.
+
+## Our Own Architecture
+
+<img width="626" alt="image" src="https://user-images.githubusercontent.com/82514136/167513117-9d3a0334-318f-4dc9-afe8-d329616602a9.png">
+
+
+Improvising on the baseline RNN model, a bidirectional LSTM is used along with cross validation to boost the performance of the model. We use a 1D convolutional layer to form the contextual embeddings for the Bi-LSTM model. The input has 125 channels and the output is kept with the same
+channels to maintain consistency in the embeddings. The bidirectional LSTM network consists of an input layer of 15625 nodes, a hidden size of 125 with 3 layers and a dropout of 0.4. The output of the Bi-LSTM layer is fed into a sequential layer consisting of 3 linear layers with LeakyReLU activation and dropout of 0.3 between layers. The output is a single array of size 125 consisting of logits.
+
+## Results
+<img width="466" alt="image" src="https://user-images.githubusercontent.com/82514136/167513060-7db688ef-c625-4788-8920-64b6b7ce09ce.png">
+
+
+
